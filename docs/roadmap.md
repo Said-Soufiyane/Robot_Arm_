@@ -1,6 +1,22 @@
-# Roadmap
-- v0.1 repo scaffold
-- v0.2 J2 module prototype
-- v0.3 J3 module prototype
-- v0.5 full arm assembled + moves
-- v1.0 buildable by others with docs
+## Roadmap (next steps)
+- Bring-up Phase
+  - Verify each motor wiring (coil pairs) + one driver at a time.
+  - Validate UART comms (IFCNT changes), then lock current settings per motor.
+  - Do a holding torque “breakaway” test and record results.
+  - Do a moving torque test with acceleration (no instant speed jumps).
+- Multi-axis Phase
+  - Move to ESP32 controller.
+  - Decide: shared UART bus vs per-driver UART (likely shared).
+  - Build a harness: proper connectors, strain relief, common ground, fusing.
+  - Implement homing strategy (limit switches or hardstops + repeatability tests).
+- Mechanical Phase
+  - Finish gearbox stackups once gearboxes arrive.
+  - Finalize shaft/rod lengths from real parts + CAD, then cut/deburr.
+  - Assemble one joint fully and test backlash, stiffness, and thermal behavior.
+- Software Phase
+  - Motion planner basics: acceleration ramps, velocity limits, soft limits.
+  - Kinematics later (after mechanics stable): FK/IK for 6-axis.
+- Documentation Phase (continuous)
+  - Keep LOG.md updated with tests, failures, fixes.
+  - Add photos/videos to media/ and link from log.
+  - Write “Lessons Learned” and “Design Rationale” for final report.

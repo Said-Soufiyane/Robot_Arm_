@@ -1,0 +1,109 @@
+# Robot Arm — Relevant Calculations (so far)
+
+## 1) 4:1 gearbox effects (planetary on a stepper)
+Let gear ratio be N:1 (here N = 4).
+
+### Output speed
+ω_out = ω_motor / N
+- For 4:1 → output speed = motor speed / 4
+
+### Output torque (ideal)
+T_out ≈ T_motor × N × η
+- For 4:1 → T_out ≈ 4 × T_motor × η
+- η = gearbox efficiency (real < 1)
+
+### Position resolution (assuming 1.8° stepper = 200 steps/rev)
+Full-step angle at output:
+θ_out = 1.8° / N
+- For 4:1 → θ_out = 1.8/4 = 0.45° per full step
+
+With microstepping (M microsteps per full step):
+θ_out = 1.8° / (M × N)
+Examples with 4:1:
+- M=16 → θ_out = 1.8/(16×4) = 0.028125°
+
+
+## 2) RMS vs peak phase current (TMC2209 current setting)
+Relationship:
+I_peak ≈ I_rms × √2
+I_rms ≈ I_peak / √2
+
+Example (for a 1.7A “rated” motor current treated as peak):
+I_rms ≈ 1.7 / 1.414 = 1.20 A
+→ rms_current(1200) mA is roughly “rated-ish” for a 1.7A motor.
+
+
+## 3) PSU input current vs coil current (why PSU doesn’t show 2A)
+Bench PSU shows input power/current at VM (24V rail), not the chopped coil current.
+
+Power relation:
+P_in = V_in × I_in
+So:
+I_in = P_in / V_in
+
+Your measured example:
+V_in = 23.74 V
+P_in = 4.7 W
+I_in = 4.7 / 23.74 = 0.198 A  (~0.20 A)
+
+This can be normal even if coil phase current is much higher, because the driver recirculates/chops current internally.
+
+
+## 4) Step pulse timing → step rate → RPM (typical 200-step motor)
+Assume:
+- 200 full steps/rev (1.8° stepper)
+- Step loop uses two delays (HIGH then LOW)
+
+Step period:
+T_step(µs) = t_high + t_low
+
+Steps per second:
+steps/s = 1,000,000 / T_step(µs)
+
+RPM (full-step mode):
+RPM = (steps/s / 200) × 60
+
+Example from earlier timing:
+t_high = 800 µs
+t_low  = 800 µs
+T_step = 1600 µs
+steps/s = 1,000,000 / 1600 = 625 steps/s
+RPM = (625 / 200) × 60 = 187.5 RPM  (full-step)
+
+If using microstepping M:
+effective steps/rev = 200 × M
+RPM = (steps/s / (200×M)) × 60
+
+
+## 5) Torque comparison: old motor vs new STEPPERONLINE pack (holding torque)
+Given (nameplate/advertised holding torque):
+- Old motor (17HS4401S): 43 N·cm (typical listing)
+- New motors: 59 N·cm (84 oz-in)
+
+Holding torque ratio:
+59 / 43 = 1.37×  (≈ 37% higher)
+
+Torque-per-amp quick check:
+Old: 43 / 1.7 = 25.3 N·cm/A
+New: 59 / 2.0 = 29.5 N·cm/A
+Ratio: 29.5 / 25.3 = 1.17× (≈ 16–17% stronger per amp)
+
+Meaning: the “big gain” only happens if you can actually run near 2.0A.
+
+
+## 6) Holding torque test math (breakaway test with lever arm)
+Measure:
+- r = lever arm radius (from shaft center to pull point)
+- F = force at breakaway (when it jumps a step)
+
+Torque:
+T = F × r
+
+Units:
+- If F in Newtons, r in meters → T in N·m
+- If F in lbf, r in inches → T in lb-in
+
+Conversions:
+1 N·m = 141.6 oz-in
+1 lb-in = 16 oz-in
+1 N·m = 8.85 lb-in

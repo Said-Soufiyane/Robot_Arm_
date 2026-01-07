@@ -1,0 +1,17 @@
+# Robot Arm — Engineering Log
+
+## Log
+
+### 2026-01-03
+- Done: All parts ordered, BOM created, started Fusion 360 CAD.
+- Next: Rough arm layout + electronics bring-up test plan.
+
+### 2026-01-06
+- Done: Most of the smaller/misc parts arrived (wiring, fasteners, general hardware). Planned mechanical prep steps for cutting steel rods.
+- Issue: Still missing gearboxes + NEMA23-related hardware, so final shaft/rod lengths aren’t locked yet.
+- Next: Wait for gearboxes + NEMA23 parts, then confirm dimensions from real parts/CAD before cutting final rod lengths. Deburr + square rod ends after cutting.
+
+### 2026-01-07
+- Done: Got TMC2209 + NEMA17 bench test running again using a spare ESP8266 (single-motor bring-up). New STEPPERONLINE 5-pack NEMA17 motors (2A, 84 oz-in, 48mm) arrived. Added VM decoupling capacitor + UART resistor + EN pull-up, which fixed the shorting/glitchy behavior and stabilized UART + motor control.
+- Issue: Fried a TMC2209 during earlier testing (likely from leaving 24V VM on during MCU upload/reset causing transient/glitch conditions). Also hit COM18 “Access is denied” during upload (port was in use).
+- Next: Keep VM OFF during uploads/resets and keep EN default-disabled. Use proper VM capacitance at the driver. Continue single-axis validation on ESP8266 if needed, but switch back to ESP32 for multi-driver testing once ESP32 board issues are resolved (ESP8266 won’t have enough GPIO for multi-axis).
