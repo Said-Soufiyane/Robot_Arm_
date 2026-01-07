@@ -1,4 +1,5 @@
 # Robot Arm (ESP32) — 6-Axis Desktop Arm (In Progress)
+![Robot Arm cover](media/photos/cover.jpeg)
 
 A table-mountable 6-axis desktop robot arm project focused on being **publishable, reproducible, and upgradeable**.  
 Target is a **real 2.0 kg payload** using **COTS metal planetary gearboxes** on the high-torque joints, with careful bearing design so gearboxes are not used as structural supports.
