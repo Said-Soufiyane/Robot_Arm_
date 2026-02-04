@@ -15,3 +15,49 @@
 - Done: Got TMC2209 + NEMA17 bench test running again using a spare ESP8266 (single-motor bring-up). New STEPPERONLINE 5-pack NEMA17 motors (2A, 84 oz-in, 48mm) arrived. Added VM decoupling capacitor + UART resistor + EN pull-up, which fixed the shorting/glitchy behavior and stabilized UART + motor control.
 - Issue: Fried a TMC2209 during earlier testing (likely from leaving 24V VM on during MCU upload/reset causing transient/glitch conditions). Also hit COM18 “Access is denied” during upload (port was in use).
 - Next: Keep VM OFF during uploads/resets and keep EN default-disabled. Use proper VM capacitance at the driver. Continue single-axis validation on ESP8266 if needed, but switch back to ESP32 for multi-driver testing once ESP32 board issues are resolved (ESP8266 won’t have enough GPIO for multi-axis).
+
+### 2026-01-013
+- Done: All parts ordered Have arrived, gearboxes have been test fitted. Electronic plan ground work has been laid.
+- Issue: The planetary gear box for the nema17 motor was advertised to be a 5mm coupling but was off spec and did not fit the shaft 
+- Solution: spacers were 3d printed and elongated screws were used to hold the gearbox and motor in place.
+- Next: Rough arm layout and j1 fusion models.
+### 2026-01-20
+- Done: Revised architecture to use two NEMA 23 motors (instead of one) for the higher-load joints to improve torque margin and stiffness.
+- Next: Finalize driver count and wiring strategy around the new motor split.
+
+### 2026-01-22
+- Done: Locked the driver plan for a 6-axis setup: 2× TB6600 (for the NEMA 23 motors) and 4× TMC2209 (for the remaining axes).
+- Done: Confirmed a 38-pin ESP32 has enough GPIO for 6 axes STEP/DIR, a servo, and homing switches if enable pins are minimized or shared.
+- Next: Work through TB6600 signal-level details and start a clean pinout plan.
+
+### 2026-01-24
+- Done: Verified the specific TB6600 DIP switch mapping on the actual unit (SW1–SW3 = microstep, SW4–SW6 = current) and set it up for bring-up testing.
+- Issue: TB6600 opto inputs were unreliable with ESP32 3.3 V direct signaling and nothing happens behavior showed up during early tests.
+- Solution: Chose 5 V common-anode wiring for TB6600 PUL/DIR (PUL+/DIR+ to 5 V, ESP32 sinks on PUL-/DIR-, shared ground to TB6600 GND next to VCC).
+- Next: Standardize the wiring method across both TB6600s and keep motor power isolated during flashing.
+
+### 2026-01-27
+- Done: Defined power and safety plan. Added a rear I/O rocker switch as master motor power cutoff and planned a front-accessible E-Stop (NC, latching) inline with the 24 V motor supply.
+- Next: Integrate switch placement into enclosure CAD and confirm current ratings for the chosen switches.
+
+### 2026-01-29
+- Done: Designed/planned an electronics cooling box to house TB6600s, TMC2209s, ESP32, and power distribution with active cooling.
+- Done: Confirmed fan placement can be perpendicular in the enclosure as long as there is a clear intake-to-exhaust airflow path across the drivers.
+- Next: Finalize enclosure layout and fan/vent locations, then route wiring cleanly.
+
+### 2026-01-31
+- Done: Began collecting vendor/GrabCAD STEP models for motors and gearboxes to speed up packaging CAD and joint layout.
+- Done: Clarified CAD usage rules: third-party CAD will be used for fit/reference and not redistributed as original files.
+- Next: Pick a standard gearbox/motor envelope for early joint spacing and start armature CAD.
+
+### 2026-02-02
+- Done: Standardized early mechanical layout around a NEMA 23 geared motor envelope (targeting about 143 mm overall length class and 14 mm output shaft) so joint spacing can be designed now and refined later.
+- Done: Confirmed gearbox ratios often share mounting faces but vary in axial length, so the arm will be designed around the longest expected gearbox to avoid redesigns.
+- Next: Start joint housings and bearing blocks using the standardized envelope and print clearance test parts.
+
+### 2026-02-04
+- Done: Began CAD on the armatures and joint structures and prepared to start printing test pieces to validate fits, clearances, and mounting geometry.
+- Done: Leaning toward a belt-driven J1 approach to achieve about 170 degrees of rotation with improved packaging and reduced backlash transmission compared to a purely direct-drive layout.
+- Issue: GitHub cover image update required Git LFS and CLI push. Push was blocked by remote changes and unstaged local edits (engineering log and BOM).
+- Solution: Identified workflow to stash local edits, rebase or pull remote changes, then push cleanly.
+- Next: Print and evaluate first test parts, finalize J1 belt path and idler geometry, complete the electronics enclosure CAD, and proceed to multi-axis bring-up on the ESP32 once wiring is locked.
