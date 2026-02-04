@@ -1,6 +1,6 @@
 # Robot Arm (ESP32) — 6-Axis Desktop Arm (In Progress)
 <p align="center">
-  <img src="media/photos/cover.jpeg" alt="Robot Arm cover" width="400">
+  <img src="media/photos/Fusion.png" alt="Robot Arm cover" width="400">
   <br/>
   <em>Bench test: TMC2209 + NEMA17 bring-up</em>
 </p>
