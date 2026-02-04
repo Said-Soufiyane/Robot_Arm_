@@ -2,7 +2,7 @@
 <p align="center">
   <img src="media/photos/Fusion.png" alt="Robot Arm cover" width="400">
   <br/>
-  <em>Bench test: TMC2209 + NEMA17 bring-up</em>
+  <em>Bench test:Cooling box+ j1 + j2</em>
 </p>
 
 A table-mountable 6-axis desktop robot arm project focused on being **publishable, reproducible, and upgradeable**.  
