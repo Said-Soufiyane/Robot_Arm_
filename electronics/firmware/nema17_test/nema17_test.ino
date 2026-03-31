@@ -88,8 +88,8 @@
 #include <TMCStepper.h>
 
 
-#define STEP_PIN 14   // GPIO14
-#define DIR_PIN  12   // GPIO12
+#define STEP_PIN 23   // GPIO14
+#define DIR_PIN  22   // GPIO12
 #define EN_PIN   13   // GPIO13
 
 // --- UART (PDN_UART) pins ---

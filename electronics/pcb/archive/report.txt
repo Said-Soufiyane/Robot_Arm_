@@ -1,0 +1,11 @@
+Info: Output directory 'I:\Projects\Robot_Arm_\electronics\New folder\kicad roboarm\drill files and gerber' created.
+Plotted to 'I:\Projects\Robot_Arm_\electronics\New folder\kicad roboarm\drill files and gerber\kicad roboarm-F_Cu.gbr'.
+Plotted to 'I:\Projects\Robot_Arm_\electronics\New folder\kicad roboarm\drill files and gerber\kicad roboarm-B_Cu.gbr'.
+Plotted to 'I:\Projects\Robot_Arm_\electronics\New folder\kicad roboarm\drill files and gerber\kicad roboarm-F_Silkscreen.gbr'.
+Plotted to 'I:\Projects\Robot_Arm_\electronics\New folder\kicad roboarm\drill files and gerber\kicad roboarm-B_Silkscreen.gbr'.
+Plotted to 'I:\Projects\Robot_Arm_\electronics\New folder\kicad roboarm\drill files and gerber\kicad roboarm-F_Mask.gbr'.
+Plotted to 'I:\Projects\Robot_Arm_\electronics\New folder\kicad roboarm\drill files and gerber\kicad roboarm-B_Mask.gbr'.
+Plotted to 'I:\Projects\Robot_Arm_\electronics\New folder\kicad roboarm\drill files and gerber\kicad roboarm-Edge_Cuts.gbr'.
+Created Gerber job file 'I:\Projects\Robot_Arm_\electronics\New folder\kicad roboarm\drill files and gerber\kicad roboarm-job.gbrjob'.
+Info: Done.
+Info: Done.
