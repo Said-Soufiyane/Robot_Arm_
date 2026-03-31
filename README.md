@@ -1,6 +1,6 @@
 # Robot Arm (ESP32) — 6-Axis Desktop Arm (In Progress)
 <p align="center">
-  <img src="media/photos/Fusion.png" alt="Robot Arm cover" width="400">
+  <img src=""I:\Projects\Robot_Arm_\mechanical\j1-j2_assembled.jpeg"" alt="Robot Arm cover" width="400">
   <br/>
   <em>Cooling box + j1 + j2</em>
 </p>
