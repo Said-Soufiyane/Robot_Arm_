@@ -1,11 +1,12 @@
 # Robot Arm (ESP32) — 6-Axis Desktop Arm (In Progress)
+
 <p align="center">
-  <img src="mechanical/images/j1_j2_assembly.jpeg" alt="Robot Arm cover" width="420">
+  <img src="mechanical/images/j1_j2_assembly.jpeg" alt="Robot Arm cover" width="700">
+  <br/><br/>
   <img src="electronics/images/pcb_test_result.png" alt="PCB test result" width="420">
   <br/>
   <em>J1/J2 assembly and PCB test result</em>
 </p>
-
 
 A table-mountable 6-axis desktop robot arm project focused on being **publishable, reproducible, and upgradeable**.  
 Target is a **real 2.0 kg payload** using **COTS metal planetary gearboxes** on the high-torque joints, with careful bearing design so gearboxes are not used as structural supports.
@@ -14,10 +15,10 @@ Target is a **real 2.0 kg payload** using **COTS metal planetary gearboxes** on 
 
 ## Status
 - Parts: most items arrived; **waiting on gearboxes + NEMA23-related hardware**
-- Current work: stepper driver bring-up and bench testing (TMC2209 + NEMA17)
-- Controller: single-axis tests done on ESP8266; multi-axis control will be **ESP32**
+- Current work: stepper driver bring-up, bench testing, and PCB validation
+- Controller: single-axis tests done earlier; multi-axis control target is **ESP32**
 
-See: `LOG.md`
+See: `LOGS/robot_arm_engineering_log.txt`
 
 ---
 
@@ -42,53 +43,63 @@ See: `LOG.md`
 Each joint uses a bearing stack so loads go through bearings, not gearbox shafts.
 
 ### Electronics plan
-- Controller: **ESP32** (multi-axis)
-- Drivers: current-limited stepper drivers (TMC2209/TB6600-class)
-- Control: STEP/DIR per axis (shared EN optional)
-- Optional: UART for TMC2209 current/tuning
+- Controller: **ESP32** for multi-axis control
+- Drivers: current-limited stepper drivers such as **TMC2209** and **TB6600-class**
+- Control: STEP/DIR per axis, with shared enable optional
+- Optional: UART for TMC2209 current tuning and diagnostics
 
 ### Power plan
 - 24V motor rail for steppers
-- Buck converters for 12V (PC fan) and 5V (servo)
-- Single ground reference (common ground bus)
+- Buck converters for 12V fan power and 5V servo power
+- Single common ground reference
 
 ---
 
 ## Repository Layout
-- `LOG.md` — engineering log (daily progress, issues, next steps)
-- `specs/` — project specs (payload/reach/power targets, constraints)
-- `docs/` — assembly notes, wiring notes, test plans
-- `firmware/` — controller firmware (ESP32 focus)
-- `cad/` — CAD exports / notes (STEPs, screenshots, etc.)
+- `docs/` — design notes, roadmap, and specs
+- `electronics/`
+  - `firmware/` — test and controller firmware
+  - `pcb/`
+    - `source/` — KiCad source files
+    - `gerbers/` — fabrication outputs
+    - `archive/` — backups and older exports
+  - `schematics/images/` — wiring and schematic references
+  - `images/` — PCB photos and test result images
+- `LOGS/` — engineering log and progress notes
+- `mechanical/`
+  - `bom/` — bill of materials
+  - `exports/stl/` — printable/exported mechanical files
+  - `images/` — assembly and mechanical progress images
 - `media/`
-  - `photos/` — build photos
-  - `videos/` — short test clips
-  - `renders/` — CAD renders
-- `tools/` — bring-up sketches and helper scripts/templates
+  - `photos/` — general build photos
+  - `Videos/` — short test clips
+- `tools/`
+  - `calculations/` — supporting calculations
+  - `repo_maintenance/` — repo utility scripts
 
 ---
 
-## Bring-Up Notes (read before powering anything)
-**Hard rules that came from bench testing:**
-1. Use **current-limited stepper drivers** for 12–24V operation (no DC H-bridges for steppers at 24V).
-2. Add **VM decoupling** at each driver (electrolytic across VM–GND near the driver; 50V rated recommended).
-3. Keep drivers **disabled by default** during boot/upload (EN pull resistor).
-4. **VM OFF during MCU upload/reset.**
+## Bring-Up Notes
+**Hard rules from bench testing:**
+1. Use **current-limited stepper drivers** for 12–24V operation.
+2. Add **VM decoupling** near each driver.
+3. Keep drivers **disabled by default** during boot and upload.
+4. Turn **VM off during MCU upload/reset**.
 5. Never hot-plug motor leads.
 
 ---
 
 ## Media
-Test photos and clips live in `media/` and are referenced from `LOG.md`.
+Build photos, PCB images, and test clips are stored throughout `mechanical/images/`, `electronics/images/`, and `media/`.
 
 ---
 
-## Roadmap (high level)
-- Finish single-axis validation: current set, thermal behavior, holding torque breakaway test
-- Move to ESP32 and validate 2–3 axes together
-- Assemble one full joint stack (gearbox + bearings + structure) and measure backlash/stiffness
-- Scale to 6 axes, add homing, then repeatability testing
-- Publish assembly + wiring + firmware documentation
+## Roadmap
+- Finish single-axis validation: current setpoint, thermal behavior, and holding torque testing
+- Move fully to ESP32 and validate 2–3 axes together
+- Assemble one full joint stack and measure backlash and stiffness
+- Scale to 6 axes, add homing, and test repeatability
+- Publish assembly, wiring, PCB, and firmware documentation
 
 ---
 
